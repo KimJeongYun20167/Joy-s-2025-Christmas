@@ -76,7 +76,7 @@ def make_snow_html(n: int = 60) -> str:
 st.markdown(make_snow_html(), unsafe_allow_html=True)
 
 # =====================
-# 👀 방문 카운트(세션 기준) - 본문에 크게 표시
+# 👀 방문 카운트
 if "visits" not in st.session_state:
     st.session_state["visits"] = 0
 st.session_state["visits"] += 1
