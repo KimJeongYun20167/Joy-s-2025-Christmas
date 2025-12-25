@@ -11,4 +11,4 @@ audio_path = Path(__file__).parent / "asset" / "carol.mp3"
 if audio_path.exists():
     st.audio(audio_path.read_bytes(), format="audio/mp3")
 else:
-    st.error("assets/carol.mp3 파일이 없어요!")
+    st.error("asset/carol.mp3 파일이 없어요!")
