@@ -19,7 +19,7 @@ from pathlib import Path
 # 파일 경로
 BASE_DIR = Path(__file__).parent
 ASSET_DIR = BASE_DIR / "asset"
-BG_IMAGE = ASSET_DIR / "christmas.jpg"
+BG_IMAGE = ASSET_DIR / "christmas.JPG"
 
 # 배경 이미지 CSS
 st.markdown(
