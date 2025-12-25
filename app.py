@@ -1,4 +1,3 @@
-
 import streamlit as st
 from pathlib import Path
 import base64
@@ -118,4 +117,4 @@ audio_path = ASSET_DIR / "carol.mp3"
 if audio_path.exists():
     st.audio(audio_path.read_bytes())
 else:
-    st.error("asset/carol.mp3 파일이 없어요!")
+    st.error("asset/carol.mp3 내 머리처럼 파일이 비었음!")
