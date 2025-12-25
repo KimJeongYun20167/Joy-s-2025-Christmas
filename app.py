@@ -43,12 +43,6 @@ st.markdown(
         color: white;
     }
 
-    /* 제목 강조 */
-    h1, h2, h3 {
-        color: white;
-        text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
-    }
-
     /* 본문 텍스트 */
     p {
         color: white;
