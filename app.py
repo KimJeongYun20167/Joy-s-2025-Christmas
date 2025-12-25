@@ -1,12 +1,9 @@
 import streamlit as st
 from pathlib import Path
 import base64
-import streamlit.components.v1 as components
+import random
 
-# =====================
-# 기본 설정
-# =====================
-st.set_page_config(page_title="🎄 Christmas Carol", page_icon="🎄")
+st.set_page_config(page_title="🎄 Christmas Carol", page_icon="🎄", layout="centered")
 
 BASE_DIR = Path(__file__).parent
 ASSET_DIR = BASE_DIR / "asset"
@@ -32,23 +29,26 @@ st.markdown(
 )
 
 # =====================
-# 글자 스타일 (흰색, 그림자 없음)
+# 글씨 흰색 "강제" (그림자 없음)
 # =====================
 st.markdown(
     """
     <style>
-    html, body, [class*="css"] {
-        color: white;
+    /* Streamlit이 덮어쓰는 걸 방지하려고 !important 사용 */
+    .stApp, .stApp * {
+        color: white !important;
     }
 
-    h1, h2, h3 {
-        color: white;
-        font-weight: 600;
+    /* 제목은 깔끔하게 흰색만 */
+    .stApp h1 {
+        color: white !important;
+        font-weight: 700 !important;
     }
 
-    p {
-        color: white;
-        font-size: 1.05rem;
+    /* 본문 */
+    .stApp p {
+        color: white !important;
+        font-size: 1.05rem !important;
     }
     </style>
     """,
@@ -56,53 +56,64 @@ st.markdown(
 )
 
 # =====================
-# ❄️ 눈 내리는 효과
+# ❄️ 눈 내리는 효과 (JS 없이, HTML+CSS만)
 # =====================
-components.html(
-    """
+def make_snow_html(n: int = 50) -> str:
+    flakes = []
+    for _ in range(n):
+        left = random.uniform(0, 100)          # vw
+        size = random.uniform(10, 20)          # px
+        duration = random.uniform(6, 12)       # s
+        delay = random.uniform(0, 6)           # s
+        opacity = random.uniform(0.3, 1.0)
+        # 각 눈송이를 개별 스타일로 만들어서 JS 없이도 다양하게 떨어지게 함
+        flakes.append(
+            f'<span class="snowflake" style="left:{left:.2f}vw; '
+            f'font-size:{size:.2f}px; animation-duration:{duration:.2f}s; '
+            f'animation-delay:-{delay:.2f}s; opacity:{opacity:.2f};">❄</span>'
+        )
+
+    return f"""
     <style>
-    .snowflake {
+    #snow-layer {{
         position: fixed;
-        top: -10px;
-        color: white;
-        user-select: none;
+        inset: 0;
         pointer-events: none;
         z-index: 9999;
-        animation-name: fall;
-        animation-timing-function: linear;
-    }
+        overflow: hidden;
+    }}
 
-    @keyframes fall {
-        to { transform: translateY(110vh); }
-    }
+    .snowflake {{
+        position: absolute;
+        top: -30px;
+        color: white;
+        user-select: none;
+        animation-name: snow-fall;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        will-change: transform;
+    }}
+
+    @keyframes snow-fall {{
+        0%   {{ transform: translateY(-40px); }}
+        100% {{ transform: translateY(110vh); }}
+    }}
     </style>
 
-    <script>
-    const snowflakes = 40;
+    <div id="snow-layer">
+        {''.join(flakes)}
+    </div>
+    """
 
-    for (let i = 0; i < snowflakes; i++) {
-        const snow = document.createElement("div");
-        snow.className = "snowflake";
-        snow.textContent = "❄";
-        snow.style.left = Math.random() * 100 + "vw";
-        snow.style.fontSize = (Math.random() * 10 + 10) + "px";
-        snow.style.animationDuration = (Math.random() * 5 + 5) + "s";
-        snow.style.opacity = Math.random();
-        document.body.appendChild(snow);
-    }
-    </script>
-    """,
-    height=0,
-)
+st.markdown(make_snow_html(60), unsafe_allow_html=True)
 
 # =====================
-# 본문 내용
+# 본문
 # =====================
 st.title("Christmas at Hogwarts")
 st.write("숙제하기 싫어서 만든 뻘짓거리♡꙼̈")
 
 audio_path = ASSET_DIR / "carol.mp3"
-
 if audio_path.exists():
     st.audio(audio_path.read_bytes())
 else:
