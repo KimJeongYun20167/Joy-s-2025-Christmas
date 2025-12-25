@@ -76,32 +76,7 @@ def make_snow_html(n: int = 60) -> str:
 st.markdown(make_snow_html(), unsafe_allow_html=True)
 
 # =====================
-import requests
 
-NAMESPACE = "christmas-at-hogwarts"   # 아무 문자열, 앱마다 고유하게
-KEY = "total-visits"
-
-try:
-    r = requests.get(f"https://api.countapi.xyz/hit/{NAMESPACE}/{KEY}", timeout=5)
-    total = r.json().get("value", "?")
-
-    st.markdown(
-        f"""
-        <div style="
-            display:inline-block;
-            background: rgba(0,0,0,0.45);
-            padding: 10px 14px;
-            border-radius: 12px;
-            margin-bottom: 10px;
-            font-weight: 700;
-        ">
-            👀 Visitors at Hogwarts: {total}
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-except:
-    st.markdown("👀 Visitors at Hogwarts: ?")
 # =====================
 # 본문
 # =====================
