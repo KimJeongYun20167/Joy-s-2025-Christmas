@@ -91,7 +91,7 @@ st.markdown(
         margin-bottom: 10px;
         font-weight: 700;
     ">
-        👀 Visitor at Hogwarts: {st.session_state['visits']}
+        👀 Visitors at Hogwarts: {st.session_state['visits']}
     </div>
     """,
     unsafe_allow_html=True
