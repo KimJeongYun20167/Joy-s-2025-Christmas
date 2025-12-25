@@ -3,8 +3,8 @@ from pathlib import Path
 
 st.set_page_config(page_title="🎄 Christmas Carol", page_icon="🎄")
 
-st.title("🎄 크리스마스 캐롤 웹페이지")
-st.write("아이패드로 만든 Streamlit 페이지")
+st.title("𝙲𝚑𝚛𝚒𝚜𝚝𝚖𝚊𝚜 𝚊𝚝 𝙷𝚘𝚐𝚠𝚊𝚛𝚝𝚜 ᙏ̤̮ ")
+st.write("숙제하기 싫어서 만든 뻘짓거리♡꙼̈")
 
 audio_path = Path(__file__).parent / "assets" / "carol.mp3"
 
