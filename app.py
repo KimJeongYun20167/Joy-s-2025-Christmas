@@ -3,14 +3,12 @@ from pathlib import Path
 import base64
 import random
 
-# ✅ 무조건 맨 위!
 st.set_page_config(page_title="🎄 Christmas Carol", page_icon="🎄", layout="centered")
 
 BASE_DIR = Path(__file__).parent
 ASSET_DIR = BASE_DIR / "asset"
 
-# =====================
-# 배경 이미지
+# 배경
 # =====================
 BG_IMAGE = ASSET_DIR / "christmas.JPG"
 bg_base64 = base64.b64encode(BG_IMAGE.read_bytes()).decode()
@@ -78,13 +76,26 @@ def make_snow_html(n: int = 60) -> str:
 st.markdown(make_snow_html(), unsafe_allow_html=True)
 
 # =====================
-# 👀 방문자 수(세션 카운터) — 무조건 보임
-# =====================
+# 👀 방문 카운트(세션 기준) - 본문에 크게 표시
 if "visits" not in st.session_state:
     st.session_state["visits"] = 0
 st.session_state["visits"] += 1
 
-st.sidebar.markdown(f"👀 **이번 세션 방문 카운트:** {st.session_state['visits']}")
+st.markdown(
+    f"""
+    <div style="
+        display:inline-block;
+        background: rgba(0,0,0,0.45);
+        padding: 10px 14px;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        font-weight: 700;
+    ">
+        👀 방문 카운트(이 기기 기준): {st.session_state['visits']}
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # =====================
 # 본문
