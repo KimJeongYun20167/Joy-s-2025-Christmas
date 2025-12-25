@@ -3,6 +3,22 @@ from pathlib import Path
 import base64
 import random
 
+import json
+
+counter_file = BASE_DIR / "counter.json"
+
+# 파일 없으면 0부터 시작
+if not counter_file.exists():
+    counter_file.write_text(json.dumps({"count": 0}))
+
+# 읽기
+data = json.loads(counter_file.read_text())
+data["count"] += 1
+
+# 저장
+counter_file.write_text(json.dumps(data))
+
+st.markdown(f"👀 **방문자 수:** {data['count']}명")
 st.set_page_config(page_title="🎄 Christmas Carol", page_icon="🎄", layout="centered")
 
 BASE_DIR = Path(__file__).parent
