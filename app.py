@@ -91,7 +91,7 @@ st.markdown(
         margin-bottom: 10px;
         font-weight: 700;
     ">
-        👀 방문 카운트(이 기기 기준): {st.session_state['visits']}
+        👀 visitor count: {st.session_state['visits']}
     </div>
     """,
     unsafe_allow_html=True
