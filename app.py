@@ -1,10 +1,3 @@
-st.set_page_config(
-    page_title="Christmas at Hogwarts",   # <- 여기 바꾸기
-    page_icon="🎄",
-    layout="centered"
-)
-
-
 
 import streamlit as st
 from pathlib import Path
