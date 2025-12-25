@@ -1,13 +1,19 @@
 import streamlit as st
 from pathlib import Path
 import base64
+import streamlit.components.v1 as components
 
+# =====================
+# 기본 설정
+# =====================
 st.set_page_config(page_title="🎄 Christmas Carol", page_icon="🎄")
 
 BASE_DIR = Path(__file__).parent
 ASSET_DIR = BASE_DIR / "asset"
 
+# =====================
 # 배경 이미지
+# =====================
 BG_IMAGE = ASSET_DIR / "christmas.JPG"
 bg_base64 = base64.b64encode(BG_IMAGE.read_bytes()).decode()
 
@@ -25,28 +31,23 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("𝙲𝚑𝚛𝚒𝚜𝚝𝚖𝚊𝚜 𝚊𝚝 𝙷𝚘𝚐𝚠𝚊𝚛𝚝𝚜")
-st.write("숙제하기 싫어서 만든 뻘짓거리♡꙼̈")
-
-audio_path = ASSET_DIR / "carol.mp3"
-
-if audio_path.exists():
-    st.audio(audio_path.read_bytes())
-else:
-    st.error("asset/carol.mp3 파일이 없어요!")
-
+# =====================
+# 글자 스타일 (흰색, 그림자 없음)
+# =====================
 st.markdown(
     """
     <style>
-    /* 전체 글자 색 */
-    html, body, [class*="css"]  {
+    html, body, [class*="css"] {
         color: white;
     }
 
-    /* 본문 텍스트 */
+    h1, h2, h3 {
+        color: white;
+        font-weight: 600;
+    }
+
     p {
         color: white;
-        text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
         font-size: 1.05rem;
     }
     </style>
@@ -54,14 +55,16 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.markdown(
+# =====================
+# ❄️ 눈 내리는 효과
+# =====================
+components.html(
     """
     <style>
     .snowflake {
         position: fixed;
         top: -10px;
         color: white;
-        font-size: 1em;
         user-select: none;
         pointer-events: none;
         z-index: 9999;
@@ -70,9 +73,7 @@ st.markdown(
     }
 
     @keyframes fall {
-        to {
-            transform: translateY(110vh);
-        }
+        to { transform: translateY(110vh); }
     }
     </style>
 
@@ -80,9 +81,9 @@ st.markdown(
     const snowflakes = 40;
 
     for (let i = 0; i < snowflakes; i++) {
-        let snow = document.createElement("div");
+        const snow = document.createElement("div");
         snow.className = "snowflake";
-        snow.innerHTML = "❄";
+        snow.textContent = "❄";
         snow.style.left = Math.random() * 100 + "vw";
         snow.style.fontSize = (Math.random() * 10 + 10) + "px";
         snow.style.animationDuration = (Math.random() * 5 + 5) + "s";
@@ -91,5 +92,18 @@ st.markdown(
     }
     </script>
     """,
-    unsafe_allow_html=True
+    height=0,
 )
+
+# =====================
+# 본문 내용
+# =====================
+st.title("Christmas at Hogwarts")
+st.write("숙제하기 싫어서 만든 뻘짓거리♡꙼̈")
+
+audio_path = ASSET_DIR / "carol.mp3"
+
+if audio_path.exists():
+    st.audio(audio_path.read_bytes())
+else:
+    st.error("asset/carol.mp3 파일이 없어요!")
